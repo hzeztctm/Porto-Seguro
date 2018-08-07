@@ -1,0 +1,1278 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\date{}
+\usepackage{hyperref}
+%\usepackage{lineno}
+%\linenumbers
+%\linespread{1.6}
+%\usepackage{xfrac}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize letterpaper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\headheight 1cm
+\headsep 1cm
+\footskip 1cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Machine Learning Engineer Capstone Project: Porto Seguro's Safe Driver Predictio
+n
+\end_layout
+
+\begin_layout Author
+Miao Tian
+\end_layout
+
+\begin_layout Section
+Definition
+\end_layout
+
+\begin_layout Subsection*
+Project Overview
+\end_layout
+
+\begin_layout Standard
+Inaccuracies in auto insurance company’s accident claim prediction increase
+ the cost of insurance for good drivers and reduce the price for bad ones.
+ Therefore, predicting the probability that a driver will initiate an auto
+ insurance claim can guide auto insurance companies during the decision
+ making and pricing processes, such that they could come up with more fairer
+ auto insurance plans for their customers.
+ Porto Seguro, one of Brazil’s largest auto and homeowner insurance companies,
+ is interested in exploring new, more powerful machine learning methods.
+ A more accurate prediction will allow them to further tailor their prices,
+ and hopefully make auto insurance coverage more accessible to more drivers.
+\end_layout
+
+\begin_layout Standard
+The motivation is to predict if a driver would claim an accident given 57
+ features that describe several aspects of a driver.
+ This project is from a Kaggle playground competition 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://www.kaggle.com/c/porto-seguro-safe-driver-prediction}{Kaggle
+ Playground Competition}
+\end_layout
+
+\end_inset
+
+.
+ The objective is not only to obtain accurate prediction for accident claims,
+ but also to learn advanced machine learning methods, particularly regression
+ techniques.
+ 
+\end_layout
+
+\begin_layout Standard
+Kaggle is a platform for data science competitions where the participants
+ are challenged to build models to solve real-world machine learning problems.
+ Kaggle usually provides a training dataset and a test dataset, and the
+ task of the participants is to build a model based on the training dataset
+ and make predictions on the test dataset.
+ The participants can submit their predictions which will be evaluated by
+ specific evaluation metrics.
+ The competition has a leaderboard for the participants to compare their
+ results with others.
+ In this project, I will focus on studying novel machine learning techniques
+ and making my score close to those top rankers.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Problem Statement
+\end_layout
+
+\begin_layout Standard
+The goal of this project is to train a model based on the given data to
+ predict the probability that an individual would file a car accident claim
+ in the next year.
+ The related tasks to this problem include:
+\end_layout
+
+\begin_layout Itemize
+Exploratory data analysis – Understanding the type of features in the dataset
+ (e.g., numeric, categorical, binary, etc.), how much missing data exist, and
+ whether certain features are skewed, etc.
+ These properties are crucial for constructing an accurate model in the
+ end.
+\end_layout
+
+\begin_layout Itemize
+Feature preprocessing – Preprocess the data using the observation from the
+ exploratory data analysis, including but not limited to feature transformation,
+ data type transformation, discarding certain features.
+\end_layout
+
+\begin_layout Itemize
+Benchmark modeling – Creating a model using standard techniques for the
+ problem in order to set up a benchmark for the future modeling improvement.
+\end_layout
+
+\begin_layout Itemize
+Model improvement – Tuning model parameters to improve the model performance.
+\end_layout
+
+\begin_layout Subsection*
+Metrics
+\end_layout
+
+\begin_layout Standard
+The Normalized Gini Coefficient will be used to as the evaluation metrics
+ for this project.
+ The Gini coefficient measures the inequality among values of a frequency
+ distribution.
+ During calculation, actual observations are sorted from the largest to
+ the smallest predictions.
+ Predictions are only used for ordering actual observations; therefore,
+ the relative magnitude of the predictions are not used during calculation.
+ The scoring algorithm then compares the cumulative proportion of positive
+ class observations to a theoretical uniform proportion.
+ The Gini Coefficient ranges from approximately 
+\begin_inset Formula $0$
+\end_inset
+
+ for random guessing, to approximately 
+\begin_inset Formula $0.5$
+\end_inset
+
+ for a maximum score.
+ The Normalized Gini Coefficient adjusts the score by the theoretical maximum,
+ i.e., Gini(actual, predicted)/Gini(actual, actual), therefore, the maximum
+ score is 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Section
+Analysis
+\end_layout
+
+\begin_layout Subsection*
+Data Exploration
+\end_layout
+
+\begin_layout Standard
+The dataset consists of numerical and categorical features as well as some
+ pre-calculated ones.
+ Specifically, there are nearly 600,000 observations, each with 57 features.
+ The features cover many aspects of one customer and are believed to be
+ sufficient to describe this individual’s driving habit.
+ The dataset was labeled by identifying whether the customer files an auto
+ accident claim in the past year.
+ In the dataset, Porto Seguro labeled features that belong to similar groupings
+ in the feature names (e.g., ind, reg, car, calc).
+ In addition, feature names include the post-fix bin and cat to represent
+ binary and categorical features, respectively.
+ Features without these designations are either continuous or ordinal.
+ The dataset will be split into two pieces: training and test sets.
+ Our task is to predict the probability of a customer files a claim in the
+ test dataset using the model trained from the training dataset.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Exploratory Visualization 
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:matrix-con"
+
+\end_inset
+
+ shows the correlation matrix among the numerical features.
+ There are several variables which are strongly correlated with each other,
+ e.g., ps_reg_01 and ps_reg_02, ps_car_13 and ps_car_12, and ps_car_13 and
+ ps_car_15.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/num.png
+	scale 75
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:matrix-con"
+
+\end_inset
+
+Correlation Matrix of Continuous Data Features.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:cat"
+
+\end_inset
+
+ shows a two-way table of the binary data features.
+ As shown in the figure, most features have both their values labeled for
+ both targets, i.e., an accident claim has been filed (1) or not (0).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/bin.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:cat"
+
+\end_inset
+
+Two-Way Table of Binary Data Features.
+ Target value 1 represents filed accident claims; target value denotes no
+ claim.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ord"
+
+\end_inset
+
+ shows a two-way table of the ordinal data features.
+ As shown in the figure, most features have all their values labeled.
+ No particular relationship between features and targets can be found in
+ the data.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/ord.png
+	scale 35
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ord"
+
+\end_inset
+
+Two-Way Table of Ordinal Data Features.
+ Target value 1 represents filed accident claims; target value denotes no
+ claim.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The categorical data features will not be shown here as they have patterns
+ similar to the ordinal data features.
+ To include all the categorical features into the machine learning model,
+ the categorical variables will be transformed into some dummy variables
+ via one-hot encoding, which takes values 0 or 1 to indicate the absence
+ or presence of some categorical effects.
+ 
+\end_layout
+
+\begin_layout Standard
+After the above-mentioned data-processing, the dataset contains 214 features
+ in total and will be split into two pieces: 80% for the training dataset
+ and 20% for the test dataset.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Algorithms and Techniques
+\end_layout
+
+\begin_layout Standard
+As the purpose of this project is to explore advanced regression techniques,
+ the ensemble learning methods are to be implemented to achieve higher evaluatio
+n score.
+ The ensemble learning methods use multiple learning algorithms to obtain
+ better predictive performance than any single one of the learning algorithms.
+ Common types of ensembles are Bagging, Boosting, Bayesian parameter averaging,
+ Bucket of Models, etc.
+ We will utilize a technique called stacking in this study.
+ Stacking, or stacked generalization, was introduced by 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "stacking"
+
+\end_inset
+
+.
+ The method has been widely implemented for various machine learning problems.
+ One famous example is the top-performer solution of the Netflix Prize competiti
+on, Feature-Weighted Linear Stacking 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "netflix-ref"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The idea of stacking is to use a model or stacker to combine all the previous
+ model predictions.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:stacking"
+
+\end_inset
+
+ shows an illustration of a 2 level 5 folds 5 models stacking approach.
+ First, the training data is split into five folds, then we iterate over
+ the five models.
+ During each iteration, each base model is trained by four folds of the
+ training data, and one prediction is made by the trained model using the
+ remaining one fold of training data.
+ In the meanwhile, each base model also makes a prediction using the whole
+ test dataset.
+ After iterating over the five folds, we will have the prediction of the
+ whole training dataset from five base models and five predictions of the
+ test dataset.
+ We then use the prediction of the training dataset as new features to train
+ the second level model (stacker).
+ Finally, we average the five predictions of the test dataset as input for
+ the trained second level model, and give prediction for the test dataset.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/stacking.jpg
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:stacking"
+
+\end_inset
+
+An Illustration of a Two-Level Five Folds Stacking.
+ Courtesy of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://dnc1994.com/2016/05/rank-10-percent-in-first-kaggle-competition-en/}
+{Wille}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Benchmark 
+\end_layout
+
+\begin_layout Standard
+We implement Gaussian Naive Bayes as our benchmark model for this project.
+ The default parameters in the scikit-learn library's Native Bayes package
+ will be used in the benchmark, which yields a Gini coefficient of 0.18559.
+\end_layout
+
+\begin_layout Section
+Methodology
+\end_layout
+
+\begin_layout Standard
+The overall methodology and modeling approach can be summarized as data
+ preprocessing, first level base model training, second model stacking,
+ and prediction on test dataset.
+ The details of this approach will be explained in the following.
+\end_layout
+
+\begin_layout Subsection*
+Data Preprocessing
+\end_layout
+
+\begin_layout Itemize
+Feature selection 
+\end_layout
+
+\begin_layout Standard
+First, we eliminate features with too much missing data.
+ In the training dataset, features 
+\begin_inset Quotes eld
+\end_inset
+
+ps_reg_03
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+ps_car_03_cat
+\begin_inset Quotes erd
+\end_inset
+
+, and 
+\begin_inset Quotes eld
+\end_inset
+
+ps_car_05_cat
+\begin_inset Quotes erd
+\end_inset
+
+ have over 15% of data missed, therefore will be discarded.
+ Moreover, the pre-calculated features, i.e., those with 
+\begin_inset Quotes eld
+\end_inset
+
+calc
+\begin_inset Quotes erd
+\end_inset
+
+ in the feature names, will not be used in the machine learning as suggested
+ by the Kaggle public kernel and justified by the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://www.kaggle.com/c/porto-seguro-safe-driver-prediction/discussion/44629
+#250927}{1st place solution}
+\end_layout
+
+\end_inset
+
+ of this project.
+ 
+\end_layout
+
+\begin_layout Itemize
+Categorical features 
+\end_layout
+
+\begin_layout Standard
+The categorical features are processed by one-hot encoder which converts
+ categorical variables into dummy or indicator variables.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Implementation 
+\end_layout
+
+\begin_layout Standard
+The first step is to choose the regressors as the first-level base models
+ for the stacking method.
+ For this purpose I tried Decision Tree regressor, K neighbors regressor,
+ Linear Support and Vector Machine regressor, Random Forest regressor, Extra
+ Trees regressor, Elastic Net regressor, and Gradient Boosting regressor.
+ The Gradient Boosting regressor is implemented by the use of the 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "lightgbm"
+
+\end_inset
+
+ package.
+ All the other regressors are from the scikit-learn library.
+ All the regressors are used with their default parameter values without
+ fine tuning.
+ The preliminary test scores are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:pre-gini"
+
+\end_inset
+
+.
+ It is found that probability estimates give higher Gini coefficient than
+ regular class label prediction for this problem.
+ Therefore, we use regular class label prediction from some regressors only
+ if a probability estimate is not an output option.
+ As the preliminary model performance shows, LightGBM provides the highest
+ Gini coefficient.
+ The simple Naive Bayes Model (Gaussian NB) gives a second highest score
+ with model-default parameters.
+ The other model, however, show much weaker performance.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Models
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Normalized Gini Coefficient
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gaussian NB
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.18559
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Decision Tree
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.02269
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+K Neighbors
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.04058
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Linear SVM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00020
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Random Forest
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00185
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Extra Tree
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.07383
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elastic Net
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00020
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LightGBM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.27625
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:pre-gini"
+
+\end_inset
+
+Preliminary Model Scores.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The idea of stacking is based on using the predictions from the first level
+ models as new features for the second level model, and to make prediction
+ based on that.
+ Two challenging parts exist in the implementation of stacking.
+ The first one is to choose the base models for the first level prediction.
+ The second one is to find the hyperparameters for both the first-level
+ base models and the second-level stacker.
+ As the LightGBM approach outperforms the other models in the preliminary
+ tests, I will use it for the first-level model.
+ LightGBM with different combinations of hyperparameters will be applied
+ to construct the base models.
+ Then I will adopt the logistic regression classifier as the second level
+ model.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Refinement
+\end_layout
+
+\begin_layout Standard
+Two approaches are conducted to refine the model behavior.
+ At the first-level base models, the training data is split into several
+ folds to train the base models.
+ I used different fold and model numbers for the base models and default
+ hyperparameters for the second-level stacker.
+ First, I ran the model for 2 first-level models with fold number increasing
+ from 2 to 5.
+ Then, I tested the model for 5 folds with model number growing from 2 to
+ 4.
+ As Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:refinement"
+
+\end_inset
+
+ shows, the model performance improves with fold and model numbers.
+ Furthermore, the grid search technique is conducted for the second-level
+ stacker model.
+ A few hyperparameters are tuned for the logistic regression classifier
+ to achieve the highest Gini score.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/fold-gini.PNG
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/mod-gini.PNG
+	scale 80
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:refinement"
+
+\end_inset
+
+Gini Score as a Function of Fold Number (a) and Model Number (b).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Subsection*
+Model Evaluation and Validation
+\end_layout
+
+\begin_layout Standard
+It has been found in the refinement that increasing the fold and base-model
+ numbers can increase the prediction score.
+ However, the score increases tiny (at the order of 0.001) when I increase
+ the fold number from 2 to 5 and the base-model numbers from 2 to 4, although
+ the computational time increases greatly.
+ As the main project purpose is to learn about the ensemble stacking approach,
+ only reasonable amount of computational time should be allowed.
+ Therefore, the final fold and base-model numbers are choose to be 5 and
+ 4, respectively.
+ The increase in these numbers results in higher Gini coefficient from 0.28014
+ to 0.28499 (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:improvement"
+
+\end_inset
+
+).
+ It is also worth it to mention that, the stacking approach is supposed
+ to work better when the base models are as uncorrelated as possible.
+ Some effort has been put to try different sklearn-kit regressors as components
+ of the first-level model.
+ This approach, however, gives lower Gini scores.
+ Therefore, we will only use LightGBM with different hyperparameters for
+ the base models.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/test-gini.PNG
+	scale 80
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:improvement"
+
+\end_inset
+
+Model Performance improvement at different stage of model development.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Justification
+\end_layout
+
+\begin_layout Standard
+In summary, the stacking approach in this project greatly improves the Gini
+ score from 0.18559 (Gaussian NB) to 0.28499 (stacked LightGBM).
+ The result is encouraging and provide lots of things to think, learn and
+ explore.
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Subsection*
+Free-Form Visualization
+\end_layout
+
+\begin_layout Standard
+As Kaggle's Porto Seguro Safe Driver Prediction has been completed, my ultimate
+ goal in this project is to obtain a score as close as possible without
+ putting too much computational time.
+ I will use the Kaggle Leaderboard top ranker's score as my final project
+ visualization (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:leaderboard"
+
+\end_inset
+
+).
+ My score can be further improved by increasing fold and model numbers,
+ which is, however, not the interest of this project.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/leaderboard.PNG
+	scale 80
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:leaderboard"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://www.kaggle.com/c/porto-seguro-safe-driver-prediction/leaderboard}{Kag
+gle Public Leaderboard}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Reflection
+\end_layout
+
+\begin_layout Standard
+The objective of this project is to predict car accident claims using advanced
+ machine learning techniques.
+ The dataset has over 600,000 observations with 57 features for each observation.
+ An preliminary data analysis reveals that some features have too much missing
+ data, therefore should be discarded.
+ I conducted several data pre-processing steps to make the data ready for
+ training.
+ One of the difficult parts in data preprocessing is that I was including
+ the pre-calculated features in training and obtaining bad results, until
+ I found out that a lot of the Kaggle users were having the same issue.
+ It turns out that dropping these features leads to smaller input data and
+ higher prediction score.
+ Then I trained several regressors with their default parameters.
+ The LightGBM approach gives a much higher score than the rest of the benchmark
+ test models, thus I used it to construct the first-level base model for
+ the stacking approach.
+ The other challenge is to choose suitable parameters for the two level
+ of models.
+ For the first-level model, I was using a set of parameter as the benchmark,
+ and making modifications based on that.
+ The LightGBM models with different parameters form the base models.
+ For the second-level stacker model, I was using a grid search approach
+ for its parameters.
+ The first-level takes a much longer time to train compared to the second-level
+ one, therefore I wrote two separate modules for each model.
+\end_layout
+
+\begin_layout Subsection*
+Improvement
+\end_layout
+
+\begin_layout Standard
+This project gives several directions for future improvement.
+ The first one regards data preprocessing which includes missing data replacemen
+t, advanced feature selection, and so on.
+ The second one is to use more complicated machine learning techniques to
+ construct the model input.
+ For example, Kaggle's 1st-place top ranker used a Denoising Autoencoders
+ (DAE) to process the input data and neural networks (thousands of neurons
+ and three layers) to make the final prediction.
+ He obtained a score of 0.29698, only 0.02 higher than a simple LightGBM approach
+ without fine tuning for parameters.
+ Obviously, there is a trade-off between the computational resource and
+ the actual improvement in the score.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "LightGBM (2018)"
+key "lightgbm"
+
+\end_inset
+
+http://lightgbm.readthedocs.io/en/latest/index.html.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "Wolpert(1992)"
+key "stacking"
+
+\end_inset
+
+Wolpert, D.
+ H.
+ (1992).
+ Stacked generalization.
+ Neural networks, 5(2), 241-259.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "Sill et al.(2009)"
+key "netflix-ref"
+
+\end_inset
+
+Joseph Sill, Gabor Takacs, Lester Mackey, David Lin, Feature-Weighted Linear
+ Stacking, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://arxiv.org/abs/0911.0460}{https://arxiv.org/abs/0911.0460}
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,408 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\date{}
+\usepackage{hyperref}
+%\usepackage{lineno}
+%\linenumbers
+%\linespread{1.6}
+%\usepackage{xfrac}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize letterpaper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\headheight 1cm
+\headsep 1cm
+\footskip 1cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Machine Learning Engineer Nanodegree Capstone Proposal
+\end_layout
+
+\begin_layout Author
+Miao Tian
+\end_layout
+
+\begin_layout Subsection*
+Domain Background
+\end_layout
+
+\begin_layout Standard
+Reasonable auto insurance plans that suit different kinds of drivers play
+ a key role to insurance companies.
+ Inaccuracies in auto insurance company’s accident claim prediction lead
+ to unreasonable auto insurance plans which would increase the cost of insurance
+ of good drivers and reduce the price for bad ones.
+ Therefore, predicting the probability that a driver will file an auto insurance
+ claim can guide auto insurance companies during the decision making and
+ pricing processes, such that they could come up with more accessible auto
+ insurance plans for their customers.
+ 
+\end_layout
+
+\begin_layout Standard
+As machine learning techniques have been widely applied to this type of
+ problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+before "e.g.,"
+key "ML-example"
+
+\end_inset
+
+, Porto Seguro, one of Brazil’s largest auto and homeowner insurance companies,
+ is interested in developing new, more powerful machine learning methods
+ to predict the probability that a driver will file a claim.
+ Therefore, it posted a machine learning competition on 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://www.kaggle.com/c/porto-seguro-safe-driver-prediction}{Kaggle
+ Playground}
+\end_layout
+
+\end_inset
+
+.
+ The objective of this project is to predict if a driver would claim an
+ accident given many features that describe several aspects of the driver.
+ The data in this project is given and described in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://www.kaggle.com/c/porto-seguro-safe-driver-prediction/data}{https://ww
+w.kaggle.com/c/porto-seguro-safe-driver-prediction/data}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection*
+Problem Statement
+\end_layout
+
+\begin_layout Standard
+Porto Seguro labeled the customers dataset by assigning each customer an
+ ID.
+ Each ID has a target value, 1 or 0, representing if this specific customer
+ filed a claim.
+ The goal is to train a model based on the given data to predict the probability
+ that an individual will file a car accident in the next year, thus making
+ it a classification problem in machine learning terms.
+\end_layout
+
+\begin_layout Subsection*
+Dataset and Inputs
+\end_layout
+
+\begin_layout Standard
+To create the dataset, Porto Seguro compiled nearly 595,212 customers’ record
+ and tagged 57 features for each customer.
+ The features cover many aspects of one customer and are sufficient to describe
+ this person’s driving habit.
+ The dataset was labeled by identifying whether the customer files an auto
+ accident claim in the past year.
+ It is found that 21694 out of 595.212 individuals claimed an accident, 3.64%
+ of the dataset.
+ 
+\end_layout
+
+\begin_layout Standard
+In the dataset, Porto Seguro labeled features that belong to similar groupings
+ in the feature names (e.g., ind, reg, car, calc).
+ In addition, feature names include the postfix bin to represent binary
+ features and cat to indicate categorical features.
+ Features without these designations are either continuous or ordinal.
+ 
+\end_layout
+
+\begin_layout Standard
+The dataset will be split into three subsets, namely, training (60%), validation
+ (20%), and testing (20%) sets.
+ Stratified k-fold cross-validation will be used to ensure class balances
+ across each subset.
+\end_layout
+
+\begin_layout Subsection*
+Solution Statement
+\end_layout
+
+\begin_layout Standard
+As stacking techniques have been very effective in regression and classification
+ over the years, it will be used to train a stacked ensemble model to predict
+ if a customer files an auto insurance claim.
+ Stacking refers to a model ensembling technique that combines information
+ from multiple predictive models to generate a new model.
+\end_layout
+
+\begin_layout Subsection*
+Evaluation Metrics
+\end_layout
+
+\begin_layout Standard
+The Normalized Gini Coefficient will be used to as the evaluation metrics
+ for this project.
+ The Gini coefficient measures the inequality among values of a frequency
+ distribution.
+ During calculation, actual observations are sorted from the largest to
+ the smallest predictions.
+ Predictions are only used for ordering actual observations; therefore,
+ the relative magnitude of the predictions are not used during calculation.
+ The scoring algorithm then compares the cumulative proportion of positive
+ class observations to a theoretical uniform proportion.
+ The Gini Coefficient ranges from approximately 
+\begin_inset Formula $0$
+\end_inset
+
+ for random guessing, to approximately 
+\begin_inset Formula $0.5$
+\end_inset
+
+ for a maximum score.
+ The Normalized Gini Coefficient adjusts the score by the theoretical maximum,
+ i.e., Gini(actual, predicted)/Gini(actual, actual), so that the maximum score
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Benchmark Model
+\end_layout
+
+\begin_layout Standard
+Native Bayes regressor from Scikit-learn library with default hyper-parameters
+ will be our benchmark model.
+\end_layout
+
+\begin_layout Subsection*
+Project Design
+\end_layout
+
+\begin_layout Itemize
+Programming language : Python 2.7+
+\end_layout
+
+\begin_layout Itemize
+Libraries: Scikit-learn, lightgbm
+\end_layout
+
+\begin_layout Itemize
+Workflow: 
+\end_layout
+
+\begin_layout Enumerate
+Exploratory data analysis – Understanding the type of features in the dataset
+ (e.g., numeric, categorical, binary, etc.), how much missing data of different
+ features, and whether certain features are skewed, etc.
+ These properties are crucial for constructing an accurate model in the
+ end.
+\end_layout
+
+\begin_layout Enumerate
+Feature preprocessing – Preprocess the data using the observation from the
+ exploratory data analysis, including but not limited to feature transformation,
+ data type transformation, discarding certain features.
+ The features with too much missing data will be discarded; and those having
+ highly-skewed data will be scaled/normalized by the use of log transform.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Feature selection – All features will be used for my supervised learning
+ solution before any feature reduction.
+ Scikit-learn's feature importance attribute will be applied to determine
+ which features might be more important.
+ Certain features will then be dropped depending on the model performance
+ and feature importance results.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Benchmark modeling – Creating a model using standard techniques for the
+ problem in order to set up a benchmark for the future modeling improvement.
+\end_layout
+
+\begin_layout Enumerate
+Model improvement – Using stacking method 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "stacking"
+
+\end_inset
+
+, constructing an ensemble of models, tuning model parameters to improve
+ the model performance.
+ For the first-level base models, I will try many different models: Decision
+ Tree regressor, K neighbors regressor, Linear Support and Vector Machine
+ regressor, Random Forest regressor, Extra Trees regressor, Elastic Net
+ regressor, and Gradient Boosting regressor.
+ Most of these model come from the Scikit-learn library except for Gradient
+ Boosting which is from the 
+\begin_inset CommandInset citation
+LatexCommand citeauthor
+key "lightgbm"
+
+\end_inset
+
+ package.
+ For the second-level stacker, I will try Logistic regressor and ridge regressor.
+ A grid search technique will be used to refine my overall solution.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "Rondović et al.(2017)"
+key "ML-example"
+
+\end_inset
+
+Biljana, Ljiljana Kašćelan, Vujica Lazović, Tamara Đuričković, 2017.
+ A nonparametric data mining approach for risk prediction in car insurance:
+ a case study from the Montenegrin market, Information Technology for Developmen
+t 0:0, pages 1-30, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://doi.org/10.1080/1331677X.2016.1175729}{https://doi.org/10.1080/1331677X.20
+16.1175729}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "LightGBM (2018)"
+key "lightgbm"
+
+\end_inset
+
+LightGBM: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{http://lightgbm.readthedocs.io/en/latest/index.html}{http://lightgbm.readthedoc
+s.io/en/latest/index.html}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "Wolpert(1992)"
+key "stacking"
+
+\end_inset
+
+Wolpert, D.
+ H., 1992.
+ Stacked generalization.
+ Neural networks, 5(2), 241-259.
+\end_layout
+
+\end_body
+\end_document
