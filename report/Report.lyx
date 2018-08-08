@@ -113,7 +113,16 @@ Inaccuracies in auto insurance company’s accident claim prediction increase
  insurance claim can guide auto insurance companies during the decision
  making and pricing processes, such that they could come up with more fairer
  auto insurance plans for their customers.
- Porto Seguro, one of Brazil’s largest auto and homeowner insurance companies,
+ As machine learning techniques have been widely applied to this type of
+ problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+before "e.g.,"
+key "ML-example"
+
+\end_inset
+
+, Porto Seguro, one of Brazil’s largest auto and homeowner insurance companies,
  is interested in exploring new, more powerful machine learning methods.
  A more accurate prediction will allow them to further tailor their prices,
  and hopefully make auto insurance coverage more accessible to more drivers.
@@ -242,12 +251,16 @@ The dataset consists of numerical and categorical features as well as some
  sufficient to describe this individual’s driving habit.
  The dataset was labeled by identifying whether the customer files an auto
  accident claim in the past year.
+ It is found that 21694 out of 595.212 individuals claimed an accident, 3.64%
+ of the dataset.
  In the dataset, Porto Seguro labeled features that belong to similar groupings
  in the feature names (e.g., ind, reg, car, calc).
  In addition, feature names include the post-fix bin and cat to represent
  binary and categorical features, respectively.
  Features without these designations are either continuous or ordinal.
- The dataset will be split into two pieces: training and test sets.
+ The dataset was split into two pieces: training (80%) and test sets (20%).
+ Stratified k-fold cross-validation was used to ensure class balances across
+ each subset.
  Our task is to predict the probability of a customer files a claim in the
  test dataset using the model trained from the training dataset.
  
@@ -1225,12 +1238,54 @@ t, advanced feature selection, and so on.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+label "Rondović et al.(2017)"
+key "ML-example"
+
+\end_inset
+
+Biljana, Ljiljana Kašćelan, Vujica Lazović, Tamara Đuričković, 2017.
+ A nonparametric data mining approach for risk prediction in car insurance:
+ a case study from the Montenegrin market, Information Technology for Developmen
+t 0:0, pages 1-30, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://doi.org/10.1080/1331677X.2016.1175729}{https://doi.org/10.1080/1331677X.20
+16.1175729}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 label "LightGBM (2018)"
 key "lightgbm"
 
 \end_inset
 
-http://lightgbm.readthedocs.io/en/latest/index.html.
+LightGBM: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{http://lightgbm.readthedocs.io/en/latest/index.html}{http://lightgbm.readthedoc
+s.io/en/latest/index.html}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Bibliography
