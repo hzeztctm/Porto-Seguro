@@ -16,11 +16,13 @@ This project requires **Python 2.7** and the following Python libraries installe
 All ipython notebook are used for data preprocessing and feature engineering. 
 
 ### Data
+As the size of the dataset is too large for Github's repository capacity, please download train.7z from:
+
+https://www.kaggle.com/c/porto-seguro-safe-driver-prediction/data
+
+Unzip and put train.csv in /data/ 
 
 All input data are in ./data folder and the detailed description of the data can be found in Kaggle. The dataset consists of over 600,000 data points, with each datapoint having 57 features. 
-Download train.7z from:
-https://www.kaggle.com/c/porto-seguro-safe-driver-prediction/data
-Uncompress the file and put train.csv in /data/ 
 
 **Features**
 Porto Seguro labeled features that belong to similar groupings in the feature names (e.g., ind, reg, car, calc). In addition, feature names include the post-fix bin and cat to represent binary and categorical features, respectively. Features without these designations are either continuous or ordinal. 
